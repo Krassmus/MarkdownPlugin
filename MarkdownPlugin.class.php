@@ -11,13 +11,13 @@ class MarkdownPlugin extends StudIPPlugin implements SystemPlugin {
         StudipFormat::addStudipMarkup("html", '&lt;\/?([\w\d]+)(.*?)&gt;', '', 'MarkdownPlugin::format_html');
         StudipFormat::addStudipMarkup("header1", '^(.*?)\n((?:=+)|(?:\-+))(?:\n|$)', '', 'MarkdownPlugin::format_header1');
         StudipFormat::addStudipMarkup("header2", '^(#+)\s+(.*?)(?:\n|$)', '', 'MarkdownPlugin::format_header2');
+        StudipFormat::addStudipMarkup("ulists", '(^[-\+\*]+\s+[^\n]+\n?)+', '', 'MarkdownPlugin::format_ulists');
+        StudipFormat::addStudipMarkup("olists", '(^\d\.+\s+[^\n]+\n?)+', '', 'MarkdownPlugin::format_olists');
         StudipFormat::addStudipMarkup("verystrong", '\*\*\*(.+?)\*\*\*', '', 'MarkdownPlugin::format_verystrong');
         StudipFormat::addStudipMarkup("strong", '\*\*(.+?)\*\*', '', 'MarkdownPlugin::format_strong');
         StudipFormat::addStudipMarkup("emphasize", '\*(.+?)\*', '', 'MarkdownPlugin::format_em');
         StudipFormat::addStudipMarkup("images", '!\[(.*?)]\(([^\s]+?)(?:\s+&quot;(.*?)&quot;)?\)', '', 'MarkdownPlugin::format_images');
         StudipFormat::addStudipMarkup("links", '\[(.*?)]\(([^\s]+?)(?:\s+&quot;(.*?)&quot;)?\)', '', 'MarkdownPlugin::format_links');
-        StudipFormat::addStudipMarkup("ulists", '(^[-\+\*]+\s+[^\n]+\n?)+', '', 'MarkdownPlugin::format_ulists');
-        StudipFormat::addStudipMarkup("olists", '(^\d\.+\s+[^\n]+\n?)+', '', 'MarkdownPlugin::format_olists');
         StudipFormat::addStudipMarkup("quotes", '(^&gt;+\s+[^\n]+\n?)+', '', 'MarkdownPlugin::format_quotes');
         StudipFormat::addStudipMarkup("codeblock", '(^(?: {4}|\t)[^\n]+\n?)+', '', 'MarkdownPlugin::format_codeblock');
         StudipFormat::addStudipMarkup("code", '`([^\n]+?)`', '', 'MarkdownPlugin::format_code');
