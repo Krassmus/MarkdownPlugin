@@ -18,6 +18,9 @@ class MarkdownPlugin extends StudIPPlugin implements SystemPlugin {
         StudipFormat::addStudipMarkup("emphasize", '\*(.+?)\*', '', 'MarkdownPlugin::format_em');
         StudipFormat::addStudipMarkup("images", '!\[(.*?)]\(([^\s]+?)(?:\s+&quot;(.*?)&quot;)?\)', '', 'MarkdownPlugin::format_images');
         StudipFormat::addStudipMarkup("links", '\[(.*?)]\(([^\s]+?)(?:\s+&quot;(.*?)&quot;)?\)', '', 'MarkdownPlugin::format_links');
+        StudipFormat::addStudipMarkup("oldmedia", '\[(img|flash|audio|video)(.*?)\](.*?)(?=\s|$)', '', 'StudipFormat::markupMedia');
+        StudipFormat::addStudipMarkup("oldmails", '(?<=\s|^|\>)(?:\[([^\n\f\]]+?)\])?([\w.!#%+-]+@([[:alnum:].-]+))(?=\s|$)', '', 'StudipFormat::markupEmails');
+        StudipFormat::addStudipMarkup("oldlinks", '(?<=\s|^|\>)(?:(?:\[([^\n\f\]]+?)\])?)(\w+?:\/\/.+?)(?=\s|$)', '', 'StudipFormat::markupLinks');
         StudipFormat::addStudipMarkup("quotes", '(^&gt;+\s+[^\n]+\n?)+', '', 'MarkdownPlugin::format_quotes');
         StudipFormat::addStudipMarkup("codeblock", '(^(?: {4}|\t)[^\n]+\n?)+', '', 'MarkdownPlugin::format_codeblock');
         StudipFormat::addStudipMarkup("code", '`([^\n]+?)`', '', 'MarkdownPlugin::format_code');
