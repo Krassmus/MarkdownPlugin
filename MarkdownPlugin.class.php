@@ -20,7 +20,7 @@ class MarkdownPlugin extends StudIPPlugin implements SystemPlugin {
         StudipFormat::addStudipMarkup("links", '\[(.*?)]\(([^\s]+?)(?:\s+&quot;(.*?)&quot;)?\)', '', 'MarkdownPlugin::format_links');
         StudipFormat::addStudipMarkup("oldmedia", '\[(img|flash|audio|video)(.*?)\](.*?)(?=\s|$)', '', 'StudipFormat::markupMedia');
         StudipFormat::addStudipMarkup("oldmails", '(?<=\s|^|\>)(?:\[([^\n\f\]]+?)\])?([\w.!#%+-]+@([[:alnum:].-]+))(?=\s|$)', '', 'StudipFormat::markupEmails');
-        StudipFormat::addStudipMarkup("oldlinks", '(?<=\s|^|\>)(?:(?:\[([^\n\f\]]+?)\])?)(\w+?:\/\/.+?)(?=\s|$)', '', 'StudipFormat::markupLinks');
+        StudipFormat::addStudipMarkup("oldlinks", '(?<=\s|^|\>)(?:(?:\[([^\n\f\]]+?)\])?)(\w+?:\/\/.+?)(?=\s|$)', '', 'MarkdownPlugin::format_oldlinks');
         StudipFormat::addStudipMarkup("quotes", '(^&gt;+\s+[^\n]+\n?)+', '', 'MarkdownPlugin::format_quotes');
         StudipFormat::addStudipMarkup("codeblock", '(^(?: {4}|\t)[^\n]+\n?)+', '', 'MarkdownPlugin::format_codeblock');
         StudipFormat::addStudipMarkup("code", '`([^\n]+?)`', '', 'MarkdownPlugin::format_code');
@@ -154,6 +154,26 @@ class MarkdownPlugin extends StudIPPlugin implements SystemPlugin {
             }
         }
         return html_entity_decode($matches[0]);
+    }
+    
+    static public function format_oldlinks($markup, $matches) 
+    {
+        $url = $matches[2];
+        $title = $matches[1] ? $matches[1] : $url;
+        
+        $intern = isLinkIntern($url);
+        
+        $url = TransformInternalLinks($url);
+
+        $linkmarkup = clone $markup;
+        $linkmarkup->removeMarkup("oldlinks");
+        
+        return sprintf('<a class="%s" href="%s"%s>%s</a>',
+            $intern ? "link-intern" : "link-extern",
+            $url,
+            $intern ? "" : ' target="_blank"',
+            $linkmarkup->format($title)
+        );
     }
     
 }
