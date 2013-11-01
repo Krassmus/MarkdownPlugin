@@ -127,6 +127,9 @@ class MarkdownPlugin extends StudIPPlugin implements SystemPlugin {
         $title = $matches[3];
         
         $intern = isLinkIntern($url);
+        if (!$intern) {
+            OpenGraphURL::$tempURLStorage[] = $url;
+        }
         $url = TransformInternalLinks($url);
 
         $linkmarkup = clone $markup;
